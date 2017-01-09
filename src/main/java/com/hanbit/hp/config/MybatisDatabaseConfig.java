@@ -25,7 +25,7 @@ public class MybatisDatabaseConfig {
 	public DataSource dataSource() {
 		DataSource dataSource = new DataSource();
 		dataSource.setDriverClassName(Driver.class.getName());
-		dataSource.setUrl("jdbc:mysql://localhost/example?characterEncoding=utf8;");
+		dataSource.setUrl("jdbc:mysql://localhost/example?characterEncoding=utf8");
 		dataSource.setUsername("hanbit");
 		dataSource.setPassword("hanbit");
 		

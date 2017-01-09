@@ -16,4 +16,5 @@ public class HanbitServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HanbitServerApplication.class, args);
 	}
+	
 }
