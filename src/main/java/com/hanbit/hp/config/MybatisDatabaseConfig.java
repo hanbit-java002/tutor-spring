@@ -25,7 +25,8 @@ public class MybatisDatabaseConfig {
 	public DataSource dataSource() {
 		DataSource dataSource = new DataSource();
 		dataSource.setDriverClassName(Driver.class.getName());
-		dataSource.setUrl("jdbc:mysql://localhost/example?characterEncoding=utf8");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/example");
+		dataSource.setConnectionProperties("characterEncoding=utf8;");
 		dataSource.setUsername("hanbit");
 		dataSource.setPassword("hanbit");
 		
@@ -34,10 +35,7 @@ public class MybatisDatabaseConfig {
 	
 	@Bean
 	public PlatformTransactionManager transactionManager(DataSource dataSource) {
-		DataSourceTransactionManager transactionManager =
-				new DataSourceTransactionManager(dataSource);
-		
-		return transactionManager;
+		return new DataSourceTransactionManager(dataSource);
 	}
 	
 	@Bean
