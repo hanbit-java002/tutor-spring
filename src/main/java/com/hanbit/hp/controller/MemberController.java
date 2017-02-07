@@ -58,7 +58,10 @@ public class MemberController {
 			throw new RuntimeException("가입되지 않은 사용자입니다.");
 		}
 		
+		String uid = memberService.getUid(userId);
+		
 		session.setAttribute("signedIn", true);
+		session.setAttribute("uid", uid);
 		session.setAttribute("userId", userId);
 		
 		Map result = new HashMap();
@@ -81,6 +84,25 @@ public class MemberController {
 		}
 		
 		result.put("result", signedIn);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/api2/member/update", method=RequestMethod.POST)
+	@ResponseBody
+	public Map update(@RequestParam("userPw") String userPw,
+			HttpSession session) {
+		
+		String uid = (String) session.getAttribute("uid");
+		
+		if (StringUtils.isBlank(uid)) {
+			throw new RuntimeException("로그인이 필요합니다.");
+		}
+		
+		memberService.modifyMember(uid, userPw);
+		
+		Map result = new HashMap();
+		result.put("result", "ok");
 		
 		return result;
 	}

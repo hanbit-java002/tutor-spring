@@ -42,6 +42,16 @@ public class MemberService {
 		
 		return passwordEncoder.matches(userPw, encryptedUserPw);
 	}
+
+	public void modifyMember(String uid, String userPw) {
+		String encryptedUserPw = passwordEncoder.encode(userPw);
+		
+		memberDAO.updateMember(uid, encryptedUserPw);
+	}
+
+	public String getUid(String userId) {
+		return memberDAO.selectUid(userId);
+	}
 	
 }
 
