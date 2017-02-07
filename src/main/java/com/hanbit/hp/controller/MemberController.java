@@ -3,6 +3,9 @@ package com.hanbit.hp.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,4 +43,71 @@ public class MemberController {
 		return result;
 	}
 	
+	@RequestMapping(value="/api2/member/signin", method=RequestMethod.POST)
+	@ResponseBody
+	public Map signin(@RequestParam("userId") String userId,
+			@RequestParam("userPw") String userPw,
+			HttpSession session) {
+		
+		try {
+			if (!memberService.isValidMember(userId, userPw)) {
+				throw new RuntimeException("패스워드가 다릅니다.");
+			}
+		}
+		catch (NullPointerException e) {
+			throw new RuntimeException("가입되지 않은 사용자입니다.");
+		}
+		
+		session.setAttribute("signedIn", true);
+		session.setAttribute("userId", userId);
+		
+		Map result = new HashMap();
+		result.put("result", "ok");
+		
+		return result;
+	}
+	
+	@RequestMapping("/api2/member/signedin")
+	@ResponseBody
+	public Map signedin(HttpSession session) {
+		Map result = new HashMap();
+		String signedIn = "no";
+		
+		if (session.getAttribute("signedIn") != null &&
+				(Boolean) session.getAttribute("signedIn")) {
+			signedIn = "yes";
+			
+			result.put("userId", session.getAttribute("userId"));
+		}
+		
+		result.put("result", signedIn);
+		
+		return result;
+	}
+	
+	@RequestMapping("/api2/member/signout")
+	@ResponseBody
+	public Map signout(HttpSession session) {
+		
+		session.invalidate();
+		
+		Map result = new HashMap();
+		result.put("result", "ok");
+		
+		return result;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

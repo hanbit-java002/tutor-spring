@@ -36,5 +36,21 @@ public class MemberService {
 		
 		return uid;
 	}
+
+	public boolean isValidMember(String userId, String userPw) {
+		String encryptedUserPw = memberDAO.selectUserPw(userId);
+		
+		return passwordEncoder.matches(userPw, encryptedUserPw);
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+

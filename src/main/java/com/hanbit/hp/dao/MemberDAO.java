@@ -21,5 +21,22 @@ public class MemberDAO {
 		
 		return sqlSession.insert("member.insertMember", param);
 	}
+
+	public String selectUserPw(String userId) {
+
+		return sqlSession.selectOne("member.selectUserPw", userId);
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
