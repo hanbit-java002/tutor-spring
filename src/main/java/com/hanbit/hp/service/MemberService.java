@@ -3,6 +3,8 @@ package com.hanbit.hp.service;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hanbit.hp.dao.MemberDAO;
@@ -10,6 +12,9 @@ import com.hanbit.hp.dao.MemberDAO;
 @Service
 public class MemberService {
 
+	private static final String SECRET_KEY = "hanbit";
+	private PasswordEncoder passwordEncoder = new StandardPasswordEncoder(SECRET_KEY);
+	
 	@Autowired
 	private MemberDAO memberDAO;
 	
@@ -25,8 +30,9 @@ public class MemberService {
 	
 	public String addMember(String userId, String userPw) {
 		String uid = generateKey("UID");
+		String encryptedUserPw = passwordEncoder.encode(userPw);
 		
-		memberDAO.insertMember(uid, userId, userPw);
+		memberDAO.insertMember(uid, userId, encryptedUserPw);
 		
 		return uid;
 	}
