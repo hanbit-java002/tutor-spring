@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class WelcomeController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(WelcomeController.class);
+	
+	@RequestMapping("/welcome")
+	@ResponseBody
+	public Map welcome() {
+		Map welcome = new HashMap();
+		welcome.put("msg", "Hello, Hanbit Plate");
+
+		return welcome;
+	}
 	
 	@RequestMapping("/form")
 	public String form() {
@@ -54,15 +67,6 @@ public class WelcomeController {
 		return map;
 	}
 
-	@RequestMapping("/")
-	@ResponseBody
-	public Map welcome() {
-		Map welcome = new HashMap();
-		welcome.put("msg", "Hello, Hanbit Plate");
-		
-		return welcome;
-	}
-	
 	@RequestMapping("/api2/hello")
 	@ResponseBody
 	public List api() {
