@@ -5,8 +5,11 @@
 <mapper namespace="admin.category">
   
 	<select id="selectList" resultType="map">
-		SELECT category_id, category_name
-		  FROM tbl_category
+		SELECT c.category_id, c.category_name,
+		       COUNT(s.category_id) stores
+		  FROM tbl_category c LEFT OUTER JOIN tbl_store s
+		    ON c.category_id = s.category_id
+		 GROUP BY c.category_id
 		 ORDER BY category_name
 	</select>
 	

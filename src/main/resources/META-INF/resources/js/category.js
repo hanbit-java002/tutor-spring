@@ -29,6 +29,7 @@ require([
 					itemHTML += "<td>" + (i+1) + "</td>";
 					itemHTML += "<td>" + item.category_name + "</td>";
 					itemHTML += "<td>" + item.category_id + "</td>";
+					itemHTML += "<td>" + item.stores + "</td>";
 					itemHTML += "</tr>";
 				}
 				
