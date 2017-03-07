@@ -9,5 +9,12 @@
 		  FROM tbl_category
 		 ORDER BY category_name
 	</select>
+	
+	<insert id="insert" parameterType="map">
+		INSERT INTO tbl_category
+			(category_id, category_name)
+		VALUES
+			(#{categoryId}, #{categoryName})
+	</insert>
   
 </mapper>
