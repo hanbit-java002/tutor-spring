@@ -25,9 +25,7 @@ public class CategoryController {
 	}
 	
 	@RequestMapping("/add")
-	public Map add(@RequestParam("categoryId") String categoryId,
-			@RequestParam("categoryName") String categoryName) {
-	
+	public Map add(@RequestParam("categoryName") String categoryName) {
 		categoryService.add(categoryName);
 		
 		Map result = new HashMap();
