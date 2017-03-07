@@ -1,4 +1,4 @@
-package com.hanbit.hp.admin;
+package com.hanbit.hp.admin.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +21,7 @@ public class AdminController {
 	public String menu(Model model, @PathVariable("menuId") String menuId) {
 		model.addAttribute("menuId", menuId);
 		model.addAttribute("cssName", "main");
-		model.addAttribute("jsName", "main");
+		model.addAttribute("jsName", menuId);
 		
 		return "admin/" + menuId;
 	}
