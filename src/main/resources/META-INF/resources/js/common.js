@@ -41,5 +41,6 @@ define([
 	
 	return {
 		initMgmt: initMgmt,
+		showSection: showSection,
 	}
 });

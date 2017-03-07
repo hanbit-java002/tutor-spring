@@ -3,6 +3,19 @@ require([
 ], function() {
 	var common = require("common");
 	
+	var handler = function(section, jqElement) {
+		if (section === ".admin-list") {
+			loadList();
+		}
+		else if (section === ".admin-add") {
+			$("#add-category_name").val("");
+			$("#add-category_name").focus();
+		}
+		else if (section === ".admin-update") {
+			
+		}
+	};
+	
 	function loadList() {
 		$.ajax({
 			url: "/admin/api/category/list",
@@ -21,19 +34,31 @@ require([
 				
 				$(".admin-list table>tbody").html(itemHTML);
 			},
-		})
+		});
 	}
 	
-	common.initMgmt(function(section, jqElement) {
-		if (section === ".admin-list") {
-			loadList();
-		}
-		else if (section === ".admin-add") {
-			$("#add-category_name").val("");
+	$(".btn-admin-save").on("click", function() {
+		var categoryName = $("#add-category_name").val().trim();
+		
+		if (categoryName === "") {
+			alert("카테고리명을 입력하세요.");
 			$("#add-category_name").focus();
+			return;
 		}
-		else if (section === ".admin-update") {
-			
-		}
+		
+		$.ajax({
+			url: "/admin/api/category/add",
+			data: {
+				categoryName: categoryName,
+			},
+			success: function() {
+				common.showSection(".admin-list", null, handler);
+			},
+			error: function() {
+				alert("저장에 실패했습니다.");
+			},
+		});
 	});
+	
+	common.initMgmt(handler);
 });
