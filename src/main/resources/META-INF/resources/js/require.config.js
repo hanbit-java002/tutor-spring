@@ -1,5 +1,5 @@
 require.config({
-    baseUrl: "static",
+    baseUrl: "/static",
 
     paths: {
         "async"         : "js/vendor/requirejs/async",
