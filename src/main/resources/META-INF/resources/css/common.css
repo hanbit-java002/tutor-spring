@@ -79,6 +79,10 @@ header {
 	display: none;
 }
 
+.admin-list table>tbody>tr {
+	cursor: pointer;
+}
+
 .admin-buttons {
 	text-align: right;
 }

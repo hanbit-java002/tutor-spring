@@ -32,10 +32,6 @@ define([
 			showSection(".admin-list", null, handler);
 		});
 		
-		$(".admin-list table>tbody>tr").on("click", function() {
-			showSection(".admin-update", $(this), handler);
-		});
-		
 		showSection(".admin-list", null, handler);
 	}
 	
