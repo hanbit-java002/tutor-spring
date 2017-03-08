@@ -98,6 +98,21 @@ require([
 		});
 	});
 	
+	$(".btn-admin-delete").on("click", function() {
+		var categoryId = $("#upt-category_id").val();
+		
+		$.ajax({
+			url: "/admin/api/category/" + categoryId,
+			method: "DELETE",
+			success: function() {
+				common.showSection(".admin-list", null, handler);
+			},
+			error: function() {
+				alert("삭제에 실패했습니다.");
+			},
+		});
+	});
+	
 	common.initMgmt(handler);
 });
 
