@@ -25,16 +25,28 @@
 	</div>
 	<div class="form-group">
     	<label class="block" for="add-store_img">대표이미지</label>
-    	<input type="file" id="add-store_img" class="hidden" placeholder="대표이미지">
+    	<input type="file" id="add-store_img" class="hidden" placeholder="대표이미지" accept="image/*">
     	<button class="btn-admin-file btn btn-primary" for="add-store_img">파일 선택</button>
 	</div>
 	<div class="form-group">
-    	<label for="add-category_name">카테고리</label>
-    	<input type="text" class="form-control" id="add-category_name" placeholder="카테고리">
+    	<label class="block" for="add-category_name">카테고리</label>
+    	<div class="btn-group">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    카테고리 선택 <span class="caret"></span>
+		  </button>
+		  <ul id="add-category" class="dropdown-menu">
+		  </ul>
+		</div>
 	</div>
 	<div class="form-group">
-    	<label for="add-location_name">지역</label>
-    	<input type="text" class="form-control" id="add-location_name" placeholder="지역">
+    	<label class="block" for="add-location_name">지역</label>
+    	<div class="btn-group">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    지역 선택 <span class="caret"></span>
+		  </button>
+		  <ul id="add-location" class="dropdown-menu">
+		  </ul>
+		</div>
 	</div>
 	<div class="admin-buttons">
 		<button class="btn-admin-save btn btn-success">저장</button>
