@@ -21,6 +21,13 @@ require([
 					}
 					
 					$("#add-category").html(itemsHTML);
+					
+					$("#add-category a").on("click", function(event) {
+						event.preventDefault();
+						
+						var categoryName = $(this).text();
+						$("#btn-txt-category").text(categoryName);
+					});
 				},
 			});
 			
@@ -38,6 +45,13 @@ require([
 					}
 					
 					$("#add-location").html(itemsHTML);
+					
+					$("#add-location a").on("click", function(event) {
+						event.preventDefault();
+						
+						var locationName = $(this).text();
+						$("#btn-txt-location").text(locationName);
+					});
 				},
 			});
 		}
