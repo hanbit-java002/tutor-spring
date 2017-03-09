@@ -24,6 +24,28 @@ define([
 	}
 
 	function initMgmt(handler) {
+		$(".btn-admin-file").on("click", function() {
+			var btn = $(this);
+			var fileInputId = btn.attr("for");
+			var fileInput = $("#" + fileInputId);
+			
+			fileInput.off("change");
+			fileInput.on("change", function() {
+				var fileReader = new FileReader();
+				
+				fileReader.onload = function(event) {
+					var tmpImgId = "tmp-" + fileInputId;
+					btn.html("<img id='" + tmpImgId + "'>");
+					
+					$("#" + tmpImgId).attr("src", event.target.result);
+				};
+				
+				fileReader.readAsDataURL(this.files[0]);
+			});
+			
+			fileInput.click();
+		});
+		
 		$(".btn-admin-add").on("click", function() {
 			showSection(".admin-add", null, handler);
 		});
