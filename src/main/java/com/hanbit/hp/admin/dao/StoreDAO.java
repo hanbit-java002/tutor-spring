@@ -1,6 +1,7 @@
 package com.hanbit.hp.admin.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -12,6 +13,10 @@ public class StoreDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
+	
+	public List selectList() {
+		return sqlSession.selectList("admin.store.selectList");
+	}
 	
 	public int insert(String storeId, String storeName,
 			String storeImg, String categoryId, String locationId) {

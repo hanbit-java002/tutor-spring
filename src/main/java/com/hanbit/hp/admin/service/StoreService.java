@@ -1,8 +1,7 @@
 package com.hanbit.hp.admin.service;
 
-import java.io.File;
+import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +19,10 @@ public class StoreService {
 	
 	@Autowired
 	private StoreDAO storeDAO;
+	
+	public List getList() {
+		return storeDAO.selectList();
+	}
 
 	@Transactional
 	public int add(String storeName,

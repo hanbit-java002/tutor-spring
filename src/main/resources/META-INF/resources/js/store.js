@@ -6,7 +6,10 @@ require([
 	var currentStore = {};
 	
 	var handler = function(section, jqElement) {
-		if (section === ".admin-add") {
+		if (section === ".admin-list") {
+			loadList();
+		}
+		else if (section === ".admin-add") {
 			$("#add-store_name").val("");
 			$("#add-store_img").val("");
 			$(".btn-admin-file").text("파일 선택");
@@ -71,6 +74,32 @@ require([
 			});
 		}
 	};
+	
+	function loadList() {
+		$.ajax({
+			url: "/admin/api/store/list",
+			success: function(list) {
+				var itemHTML = "";
+				
+				for (var i=0; i<list.length; i++) {
+					var item = list[i];
+					
+					itemHTML += "<tr category-id='" + item.store_id + "'>";
+					itemHTML += "<td>" + (i+1) + "</td>";
+					itemHTML += "<td>" + item.category_name + "</td>";
+					itemHTML += "<td>" + item.location_name + "</td>";
+					itemHTML += "<td>" + item.store_name + "</td>";
+					itemHTML += "<td>" + item.store_score + "</td>";
+					itemHTML += "</tr>";
+				}
+				
+				$(".admin-list table>tbody").html(itemHTML);
+				$(".admin-list table>tbody>tr").on("click", function() {
+					// common.showSection(".admin-update", $(this), handler);
+				});
+			},
+		});
+	}
 	
 	$(".btn-admin-save").on("click", function() {
 		var storeName = $("#add-store_name").val().trim();

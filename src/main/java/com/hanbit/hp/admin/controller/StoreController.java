@@ -1,6 +1,7 @@
 package com.hanbit.hp.admin.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -22,6 +23,11 @@ public class StoreController {
 	
 	@Autowired
 	private StoreService storeService;
+	
+	@RequestMapping("/list")
+	public List getList() {
+		return storeService.getList();
+	}
 
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public Map add(MultipartHttpServletRequest request) {
