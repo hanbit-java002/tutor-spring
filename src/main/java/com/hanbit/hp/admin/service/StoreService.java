@@ -20,8 +20,8 @@ public class StoreService {
 	@Autowired
 	private StoreDAO storeDAO;
 	
-	public List getList() {
-		return storeDAO.selectList();
+	public List getList(int page, int rowsPerPage) {
+		return storeDAO.selectList(page, rowsPerPage);
 	}
 
 	@Transactional

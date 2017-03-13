@@ -78,6 +78,10 @@ require([
 	function loadList() {
 		$.ajax({
 			url: "/admin/api/store/list",
+			data: {
+				page: 1,
+				rowsPerPage: 3,
+			},
 			success: function(list) {
 				var itemHTML = "";
 				
