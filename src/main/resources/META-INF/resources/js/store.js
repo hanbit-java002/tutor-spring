@@ -4,8 +4,8 @@ require([
 	var common = require("common");
 	
 	var currentStore = {};
-	var rowsPerPage = 2;
-	var pagesPerPaging = 4;
+	var rowsPerPage = 5;
+	var pagesPerPaging = 5;
 	var currentPage = 1;
 	
 	var handler = function(section, jqElement) {
@@ -118,7 +118,7 @@ require([
 				var pagingHTML = "";
 				
 				pagingHTML += "<li page='" + firstPage + "'>";
-				pagingHTML += "첫페이지</li>";
+				pagingHTML += "<a href='#'><i class='fa fa-fw fa-fast-backward'></i></a></li>";
 				
 				var startPage = parseInt((currentPage-1) / pagesPerPaging)
 					* pagesPerPaging + 1;
@@ -126,7 +126,7 @@ require([
 				
 				if (startPage > 1) {
 					pagingHTML += "<li page='" + (startPage - 1) + "'>";
-					pagingHTML += "이전</li>";
+					pagingHTML += "<a href='#'><i class='fa fa-fw fa-step-backward'></i></a></li>";
 				}
 				
 				for (var i=startPage; i<=endPage; i++) {
@@ -136,20 +136,22 @@ require([
 						pagingHTML += " class='active'";
 					}
 					
-					pagingHTML += ">" + i + "</li>";
+					pagingHTML += "><a href='#'>" + i + "</a></li>";
 				}
 				
 				if (endPage < lastPage) {
 					pagingHTML += "<li page='" + (endPage + 1) + "'>";
-					pagingHTML += "다음</li>";
+					pagingHTML += "<a href='#'><i class='fa fa-fw fa-step-forward'></i></a></li>";
 				}
 				
 				pagingHTML += "<li page='" + lastPage + "'>";
-				pagingHTML += "끝페이지</li>";
+				pagingHTML += "<a href='#'><i class='fa fa-fw fa-fast-forward'></i></a></li>";
 				
 				$(".admin-paging").html(pagingHTML);
-				$(".admin-paging>li").on("click", function() {
-					var page = parseInt($(this).attr("page"));
+				$(".admin-paging>li>a").on("click", function(event) {
+					event.preventDefault();
+					
+					var page = parseInt($(this).parent("li").attr("page"));
 					
 					loadList(page);
 				});
