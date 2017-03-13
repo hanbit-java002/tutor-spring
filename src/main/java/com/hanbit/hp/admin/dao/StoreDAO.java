@@ -22,6 +22,10 @@ public class StoreDAO {
 		return sqlSession.selectList("admin.store.selectList", param);
 	}
 	
+	public int count() {
+		return sqlSession.selectOne("admin.store.count");
+	}
+	
 	public int insert(String storeId, String storeName,
 			String storeImg, String categoryId, String locationId) {
 		

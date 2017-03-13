@@ -23,6 +23,10 @@ public class StoreService {
 	public List getList(int page, int rowsPerPage) {
 		return storeDAO.selectList(page, rowsPerPage);
 	}
+	
+	public int count() {
+		return storeDAO.count();
+	}
 
 	@Transactional
 	public int add(String storeName,

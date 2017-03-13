@@ -4,10 +4,13 @@ require([
 	var common = require("common");
 	
 	var currentStore = {};
+	var rowsPerPage = 2;
+	var pagesPerPaging = 4;
+	var currentPage = 1;
 	
 	var handler = function(section, jqElement) {
 		if (section === ".admin-list") {
-			loadList();
+			loadList(currentPage);
 		}
 		else if (section === ".admin-add") {
 			$("#add-store_name").val("");
@@ -75,14 +78,19 @@ require([
 		}
 	};
 	
-	function loadList() {
+	function loadList(page) {
+		currentPage = page;
+		
 		$.ajax({
 			url: "/admin/api/store/list",
 			data: {
-				page: 1,
-				rowsPerPage: 3,
+				page: page,
+				rowsPerPage: rowsPerPage,
 			},
-			success: function(list) {
+			success: function(result) {
+				var list = result.list;
+				var count = result.count;
+				
 				var itemHTML = "";
 				
 				for (var i=0; i<list.length; i++) {
@@ -100,6 +108,50 @@ require([
 				$(".admin-list table>tbody").html(itemHTML);
 				$(".admin-list table>tbody>tr").on("click", function() {
 					// common.showSection(".admin-update", $(this), handler);
+				});
+				
+				// for Paging
+				var firstPage = 1;
+				var lastPage = parseInt(count / rowsPerPage)
+					+ (count % rowsPerPage === 0 ? 0 : 1);
+				
+				var pagingHTML = "";
+				
+				pagingHTML += "<li page='" + firstPage + "'>";
+				pagingHTML += "첫페이지</li>";
+				
+				var startPage = parseInt((currentPage-1) / pagesPerPaging)
+					* pagesPerPaging + 1;
+				var endPage = Math.min(startPage + (pagesPerPaging - 1), lastPage);
+				
+				if (startPage > 1) {
+					pagingHTML += "<li page='" + (startPage - 1) + "'>";
+					pagingHTML += "이전</li>";
+				}
+				
+				for (var i=startPage; i<=endPage; i++) {
+					pagingHTML += "<li page='" + i + "'";
+					
+					if (i === currentPage) {
+						pagingHTML += " class='active'";
+					}
+					
+					pagingHTML += ">" + i + "</li>";
+				}
+				
+				if (endPage < lastPage) {
+					pagingHTML += "<li page='" + (endPage + 1) + "'>";
+					pagingHTML += "다음</li>";
+				}
+				
+				pagingHTML += "<li page='" + lastPage + "'>";
+				pagingHTML += "끝페이지</li>";
+				
+				$(".admin-paging").html(pagingHTML);
+				$(".admin-paging>li").on("click", function() {
+					var page = parseInt($(this).attr("page"));
+					
+					loadList(page);
 				});
 			},
 		});

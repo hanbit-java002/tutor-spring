@@ -17,6 +17,11 @@
 		   AND s.location_id = l.location_id
 		 ORDER BY store_name
  	</select>
+ 	
+ 	<select id="count" resultType="int">
+		SELECT COUNT(store_id)
+		  FROM tbl_store
+ 	</select>
 	
 	<insert id="insert" parameterType="map">
 		INSERT INTO tbl_store
