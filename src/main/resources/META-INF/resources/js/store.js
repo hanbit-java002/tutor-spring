@@ -94,12 +94,13 @@ require([
 				var count = result.count;
 				
 				var itemHTML = "";
+				var storeNo = (currentPage - 1) * rowsPerPage;
 				
 				for (var i=0; i<list.length; i++) {
 					var item = list[i];
 					
 					itemHTML += "<tr store-id='" + item.store_id + "'>";
-					itemHTML += "<td>" + (i+1) + "</td>";
+					itemHTML += "<td>" + (++storeNo) + "</td>";
 					itemHTML += "<td>" + item.category_name + "</td>";
 					itemHTML += "<td>" + item.location_name + "</td>";
 					itemHTML += "<td>" + item.store_name + "</td>";
