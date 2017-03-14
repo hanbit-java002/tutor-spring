@@ -8,6 +8,36 @@ require([
 	var pagesPerPaging = 5;
 	var currentPage = 1;
 	
+	function getCode(codeType, sectionType) {
+		$.ajax({
+			url: "/admin/api/" + codeType + "/list",
+			success: function(list) {
+				var itemsHTML = "";
+				
+				for (var i=0; i<list.length; i++) {
+					var item = list[i];
+					
+					itemsHTML += "<li><a href='#' item-id='";
+					itemsHTML += item[codeType + "_id"] + "'>";
+					itemsHTML += item[codeType + "_name"];
+					itemsHTML += "</a></li>";
+				}
+				
+				$("#" + sectionType + "-" + codeType).html(itemsHTML);
+				
+				$("#" + sectionType + "-" + codeType + " a").on("click", function(event) {
+					event.preventDefault();
+					
+					var codeName = $(this).text();
+					$("#btn-txt-" + sectionType + "-" + codeType).text(codeName);
+					
+					var codeId = $(this).attr("item-id");
+					currentStore[codeType + "Id"] = codeId;
+				});
+			},
+		});
+	}
+	
 	var handler = function(section, jqElement) {
 		if (section === ".admin-list") {
 			loadList(currentPage);
@@ -17,62 +47,33 @@ require([
 			$("#add-store_img").val("");
 			$(".btn-admin-file").text("파일 선택");
 			currentStore = {};
-			$("#btn-txt-category").text("카테고리 선택");
-			$("#btn-txt-location").text("지역 선택");
+			$("#btn-txt-add-category").text("카테고리 선택");
+			$("#btn-txt-add-location").text("지역 선택");
+			
+			getCode("category", "add");
+			getCode("location", "add");
+		}
+		else if (section === ".admin-update") {
+			getCode("category", "upt");
+			getCode("location", "upt");
+			
+			var storeId = jqElement.attr("store-id");
 			
 			$.ajax({
-				url: "/admin/api/category/list",
-				success: function(list) {
-					var itemsHTML = "";
+				url: "/admin/api/store/" + storeId,
+				success: function(store) {
+					$("#upt-store_id").val(store.store_id);
+					$("#upt-store_name").val(store.store_name);
 					
-					for (var i=0; i<list.length; i++) {
-						var item = list[i];
-						
-						itemsHTML += "<li><a href='#' item-id='";
-						itemsHTML += item.category_id + "'>";
-						itemsHTML += item.category_name;
-						itemsHTML += "</a></li>";
-					}
+					$("#upt-store_img").val("");
+					$(".btn-admin-file").html("<img src='" + store.store_img + "'>");
 					
-					$("#add-category").html(itemsHTML);
-					
-					$("#add-category a").on("click", function(event) {
-						event.preventDefault();
-						
-						var categoryName = $(this).text();
-						$("#btn-txt-category").text(categoryName);
-						
-						var categoryId = $(this).attr("item-id");
-						currentStore.categoryId = categoryId;
-					});
-				},
-			});
-			
-			$.ajax({
-				url: "/admin/api/location/list",
-				success: function(list) {
-					var itemsHTML = "";
-					
-					for (var i=0; i<list.length; i++) {
-						var item = list[i];
-						
-						itemsHTML += "<li><a href='#' item-id='";
-						itemsHTML += item.location_id + "'>";
-						itemsHTML += item.location_name;
-						itemsHTML += "</a></li>";
-					}
-					
-					$("#add-location").html(itemsHTML);
-					
-					$("#add-location a").on("click", function(event) {
-						event.preventDefault();
-						
-						var locationName = $(this).text();
-						$("#btn-txt-location").text(locationName);
-						
-						var locationId = $(this).attr("item-id");
-						currentStore.locationId = locationId;
-					});
+					currentStore = {
+						categoryId: store.category_id,
+						locationId: store.location_id,
+					};
+					$("#btn-txt-upt-category").text(store.category_name);
+					$("#btn-txt-upt-location").text(store.location_name);
 				},
 			});
 		}
@@ -96,7 +97,7 @@ require([
 				for (var i=0; i<list.length; i++) {
 					var item = list[i];
 					
-					itemHTML += "<tr category-id='" + item.store_id + "'>";
+					itemHTML += "<tr store-id='" + item.store_id + "'>";
 					itemHTML += "<td>" + (i+1) + "</td>";
 					itemHTML += "<td>" + item.category_name + "</td>";
 					itemHTML += "<td>" + item.location_name + "</td>";
@@ -107,7 +108,7 @@ require([
 				
 				$(".admin-list table>tbody").html(itemHTML);
 				$(".admin-list table>tbody>tr").on("click", function() {
-					// common.showSection(".admin-update", $(this), handler);
+					common.showSection(".admin-update", $(this), handler);
 				});
 				
 				// for Paging

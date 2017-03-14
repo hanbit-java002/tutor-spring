@@ -1,6 +1,7 @@
 package com.hanbit.hp.admin.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class StoreService {
 	
 	public int count() {
 		return storeDAO.count();
+	}
+	
+	public Map get(String storeId) {
+		return storeDAO.selectOne(storeId);
 	}
 
 	@Transactional

@@ -23,6 +23,15 @@
 		  FROM tbl_store
  	</select>
 	
+ 	<select id="selectOne" parameterType="string" resultType="map">
+		SELECT store_id, store_name, store_img,
+			   s.category_id, category_name, s.location_id, location_name
+		  FROM tbl_store s, tbl_category c, tbl_location l
+		 WHERE store_id = #{storeId}
+		   AND s.category_id = c.category_id
+		   AND s.location_id = l.location_id
+ 	</select>
+ 	
 	<insert id="insert" parameterType="map">
 		INSERT INTO tbl_store
 			(store_id, store_name, store_img,

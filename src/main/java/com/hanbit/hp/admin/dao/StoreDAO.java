@@ -26,6 +26,10 @@ public class StoreDAO {
 		return sqlSession.selectOne("admin.store.count");
 	}
 	
+	public Map selectOne(String storeId) {
+		return sqlSession.selectOne("admin.store.selectOne", storeId);
+	}
+	
 	public int insert(String storeId, String storeName,
 			String storeImg, String categoryId, String locationId) {
 		
