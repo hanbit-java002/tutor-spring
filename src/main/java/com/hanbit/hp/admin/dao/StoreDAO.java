@@ -30,6 +30,18 @@ public class StoreDAO {
 		return sqlSession.selectOne("admin.store.selectOne", storeId);
 	}
 	
+	public int update(String storeId, String storeName,
+			String categoryId, String locationId) {
+		
+		Map param = new HashMap();
+		param.put("storeId", storeId);
+		param.put("storeName", storeName);
+		param.put("categoryId", categoryId);
+		param.put("locationId", locationId);
+		
+		return sqlSession.insert("admin.store.update", param);
+	}
+	
 	public int insert(String storeId, String storeName,
 			String storeImg, String categoryId, String locationId) {
 		

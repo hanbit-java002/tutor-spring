@@ -32,6 +32,14 @@
 		   AND s.location_id = l.location_id
  	</select>
  	
+ 	<update id="update" parameterType="map">
+ 		UPDATE tbl_store
+ 		   SET store_name = #{storeName},
+ 		       category_id = #{categoryId},
+ 		       location_id = #{locationId}
+ 		 WHERE store_id = #{storeId}
+ 	</update>
+ 	
 	<insert id="insert" parameterType="map">
 		INSERT INTO tbl_store
 			(store_id, store_name, store_img,

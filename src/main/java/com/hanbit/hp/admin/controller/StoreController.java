@@ -40,9 +40,27 @@ public class StoreController {
 		return result;
 	}
 	
-	@RequestMapping("/{storeId}")
+	@RequestMapping(value="/{storeId}", method=RequestMethod.GET)
 	public Map get(@PathVariable("storeId") String storeId) {
 		return storeService.get(storeId);
+	}
+	
+	@RequestMapping(value="/{storeId}", method=RequestMethod.POST)
+	public Map modify(@PathVariable("storeId") String storeId,
+			MultipartHttpServletRequest request) {
+		
+		String storeName = request.getParameter("storeName");
+		String categoryId = request.getParameter("categoryId");
+		String locationId = request.getParameter("locationId");
+		
+		MultipartFile storeImgFile = request.getFile("storeImg");
+		
+		storeService.modify(storeId, storeName, categoryId, locationId, storeImgFile);
+		
+		Map result = new HashMap();
+		result.put("result", "ok");
+		
+		return result;
 	}
 
 	@RequestMapping(value="/add", method=RequestMethod.POST)

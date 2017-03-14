@@ -32,6 +32,20 @@ public class StoreService {
 	public Map get(String storeId) {
 		return storeDAO.selectOne(storeId);
 	}
+	
+	@Transactional
+	public int modify(String storeId, String storeName,
+			String categoryId, String locationId,
+			MultipartFile storeImgFile) {
+		
+		int result = storeDAO.update(storeId, storeName, categoryId, locationId);
+		
+		if (storeImgFile != null) {
+			fileService.updateAndSave(storeId, storeImgFile);
+		}
+		
+		return result;
+	}
 
 	@Transactional
 	public int add(String storeName,
@@ -39,7 +53,7 @@ public class StoreService {
 			MultipartFile storeImgFile) {
 		
 		String storeId = KeyUtils.generateKey("STO");
-		String storeImg = "/api2/file/" + storeId;		
+		String storeImg = "/api2/file/" + storeId;	
 		
 		int result = storeDAO.insert(storeId, storeName, storeImg, categoryId, locationId);
 		

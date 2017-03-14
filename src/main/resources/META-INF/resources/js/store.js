@@ -160,6 +160,43 @@ require([
 		});
 	}
 	
+	$(".btn-admin-update").on("click", function() {
+		var storeId = $("#upt-store_id").val();
+		var storeName = $("#upt-store_name").val().trim();
+		var storeImg = $("#upt-store_img").val();
+
+		if (storeName === "") {
+			alert("맛집명을 입력하세요.");
+			$("#upt-store_name").focus();
+			return;
+		}
+		
+		var formData = new FormData();
+		formData.append("storeName", storeName);
+		formData.append("categoryId", currentStore.categoryId);
+		formData.append("locationId", currentStore.locationId);
+		
+		if (storeImg !== "") {
+			var files = $("#upt-store_img")[0].files;
+			
+			formData.append("storeImg", files[0]);
+		}
+		
+		$.ajax({
+			url: "/admin/api/store/" + storeId,
+			method: "POST",
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function() {
+				common.showSection(".admin-list", null, handler);
+			},
+			error: function() {
+				alert("수정에 실패했습니다.");
+			},
+		});
+	});
+	
 	$(".btn-admin-save").on("click", function() {
 		var storeName = $("#add-store_name").val().trim();
 		var storeImg = $("#add-store_img").val();
@@ -203,7 +240,7 @@ require([
 			error: function() {
 				alert("저장에 실패했습니다.");
 			},
-		})
+		});
 	});
 	
 	common.initMgmt(handler);

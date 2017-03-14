@@ -27,6 +27,10 @@ public class FileDAO {
 		return sqlSession.selectOne("file.selectOne", fileId);
 	}
 	
+	public int delete(String fileId) {
+		return sqlSession.delete("file.delete", fileId);
+	}
+	
 }
 
 

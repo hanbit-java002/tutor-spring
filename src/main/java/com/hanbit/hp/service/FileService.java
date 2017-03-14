@@ -21,6 +21,13 @@ public class FileService {
 	private FileDAO fileDAO;
 	
 	@Transactional
+	public void updateAndSave(String fileId, MultipartFile multipartFile) {
+		delete(fileId);
+		
+		addAndSave(fileId, multipartFile);
+	}
+	
+	@Transactional
 	public String addAndSave(String fileId, MultipartFile multipartFile) {
 		fileId = add(fileId, multipartFile.getContentType(), multipartFile.getSize(),
 				multipartFile.getOriginalFilename());
@@ -46,6 +53,21 @@ public class FileService {
 		fileDAO.insert(fileId, fileType, fileSize, fileName);
 		
 		return fileId;
+	}
+	
+	@Transactional
+	public void delete(String fileId) {
+		fileDAO.delete(fileId);
+		
+		String filePath = PATH_PREFIX + fileId;
+		File file = new File(filePath);
+		
+		try {
+			FileUtils.forceDelete(file);
+		}
+		catch(Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public Map get(String fileId) {

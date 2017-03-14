@@ -43,6 +43,9 @@ public class FileController {
 			response.getOutputStream().write(buffer, 0, length);
 		}
 		
+		bis.close();
+		fis.close();
+		
 		response.flushBuffer();
 	}
 	
