@@ -66,7 +66,8 @@ require([
 					$("#upt-store_name").val(store.store_name);
 					
 					$("#upt-store_img").val("");
-					$(".btn-admin-file").html("<img src='" + store.store_img + "'>");
+					$(".btn-admin-file").html("<img src='" + store.store_img +
+							"?ts=" + Date.now() + "'>");
 					
 					currentStore = {
 						categoryId: store.category_id,
