@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hanbit.hp.service.JsonFileService;
 import com.hanbit.hp.service.MainService;
 import com.hanbit.hp.service.PickService;
+import com.hanbit.hp.service.StoreService;
 import com.hanbit.hp.service.ToplistService;
 
 @RestController
@@ -25,6 +26,9 @@ public class MainController {
 	
 	@Autowired
 	private PickService pickService;
+	
+	@Autowired
+	private StoreService storeService;
 	
 	@Autowired
 	private JsonFileService jsonFileService;
@@ -46,9 +50,7 @@ public class MainController {
 		}
 		else if ("03".equals(sectionCode) || "04".equals(sectionCode) ||
 				"05".equals(sectionCode)) {
-			String filePath = "json/section" + sectionCode + ".items.json";
-			
-			return jsonFileService.getJsonFile(filePath, List.class);
+			return storeService.getEight();
 		}
 		
 		return new ArrayList<>();
