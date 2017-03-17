@@ -55,6 +55,10 @@ public class StoreDAO {
 		return sqlSession.insert("admin.store.insert", param);
 	}
 	
+	public int insertDetail(Map storeDetail) {
+		return sqlSession.insert("admin.store.insertDetail", storeDetail);
+	}
+	
 }
 
 

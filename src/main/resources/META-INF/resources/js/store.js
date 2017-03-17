@@ -162,6 +162,21 @@ require([
 		});
 	}
 	
+	$(".btn-addr").on("click", function() {
+		var jusoPop = window.open("/admin/juso#ready","jusoPop",
+				"width=570,height=420, scrollbars=yes");
+		
+		var addrInput = $("#" + $(this).attr("for"));
+		
+		window.jusoCallback = function(addr, geoInfo) {
+			addrInput.val(addr);
+			
+			currentStore.storeAddr = addr;
+			currentStore.storeLat = geoInfo.results[0].geometry.location.lat;
+			currentStore.storeLng = geoInfo.results[0].geometry.location.lng;
+		};
+	});
+	
 	$(".btn-admin-update").on("click", function() {
 		var storeId = $("#upt-store_id").val();
 		var storeName = $("#upt-store_name").val().trim();
@@ -212,6 +227,10 @@ require([
 			alert("대표이미지를 선택하세요.");
 			return;
 		}
+		else if (!currentStore.storeAddr) {
+			alert("주소를 입력하세요.");
+			return;
+		}
 		else if (!currentStore.categoryId) {
 			alert("카테고리를 선택하세요.");
 			return;
@@ -223,6 +242,9 @@ require([
 		
 		var formData = new FormData();
 		formData.append("storeName", storeName);
+		formData.append("storeAddr", currentStore.storeAddr);
+		formData.append("storeLat", currentStore.storeLat);
+		formData.append("storeLng", currentStore.storeLng);
 		formData.append("categoryId", currentStore.categoryId);
 		formData.append("locationId", currentStore.locationId);
 		
