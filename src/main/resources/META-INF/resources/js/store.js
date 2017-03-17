@@ -47,6 +47,8 @@ require([
 			$("#add-store_img").val("");
 			$(".btn-admin-file").text("파일 선택");
 			currentStore = {};
+			$("#add-store_addr").val("");
+			$("#add-store_addr").parent("div").find("img").remove();
 			$("#btn-txt-add-category").text("카테고리 선택");
 			$("#btn-txt-add-location").text("지역 선택");
 			
