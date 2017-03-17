@@ -174,6 +174,17 @@ require([
 			currentStore.storeAddr = addr;
 			currentStore.storeLat = geoInfo.results[0].geometry.location.lat;
 			currentStore.storeLng = geoInfo.results[0].geometry.location.lng;
+			
+			var mapImageSrc = "https://maps.googleapis.com/maps/api/staticmap" +
+					"?maptype=roadmap" +
+					"&center=" + currentStore.storeLat + "," + currentStore.storeLng +
+					"&markers=color:red|" + currentStore.storeLat + "," + currentStore.storeLng +
+					"&zoom=16" +
+					"&size=300x300" +
+					"&key=AIzaSyAHX_Y_cP2i1v9lchEPJ4yROwzh9nK6of0";
+			
+			addrInput.parent("div").find("img").remove();
+			addrInput.parent("div").append("<img src='" + mapImageSrc + "'>");
 		};
 	});
 	
