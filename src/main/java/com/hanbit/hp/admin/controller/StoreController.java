@@ -88,6 +88,17 @@ public class StoreController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value="/{storeId}", method=RequestMethod.DELETE)
+	public Map remove(@PathVariable("storeId") String storeId) {
+		
+		storeService.remove(storeId);
+		
+		Map result = new HashMap();
+		result.put("result", "ok");
+		
+		return result;
+	}
 
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public Map add(MultipartHttpServletRequest request) {

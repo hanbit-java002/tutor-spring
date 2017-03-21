@@ -48,6 +48,17 @@ public class StoreService {
 		
 		return result;
 	}
+	
+	@Transactional
+	public int remove(String storeId) {
+		storeDAO.deleteDetail(storeId);
+		
+		int result = storeDAO.delete(storeId);
+		
+		fileService.delete(storeId);
+		
+		return result;
+	}
 
 	@Transactional
 	public int add(String storeName,

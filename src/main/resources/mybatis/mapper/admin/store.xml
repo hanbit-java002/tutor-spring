@@ -70,6 +70,16 @@
  		 WHERE store_id = #{storeId}
  	</update>
  	
+ 	<delete id="delete" parameterType="string">
+ 		DELETE FROM tbl_store
+ 		 WHERE store_id = #{storeId}
+ 	</delete>
+ 	
+ 	<delete id="deleteDetail" parameterType="string">
+ 		DELETE FROM tbl_store_detail
+ 		 WHERE store_id = #{storeId}
+ 	</delete>
+ 	
 	<insert id="insert" parameterType="map">
 		INSERT INTO tbl_store
 			(store_id, store_name, store_img,
