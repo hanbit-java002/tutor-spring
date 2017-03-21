@@ -84,6 +84,7 @@ require([
 					$("#upt-store_addr").val(store.store_addr);
 					
 					currentStore = {
+						storeAddr: store.store_addr,
 						storeLat: store.store_lat,
 						storeLng: store.store_lng,
 						categoryId: store.category_id,
@@ -296,6 +297,7 @@ require([
 		}
 		
 		formData.append("storeHoliday", storeHoliday);
+		
 		$.ajax({
 			url: "/admin/api/store/" + storeId,
 			method: "POST",

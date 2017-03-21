@@ -35,10 +35,12 @@ public class StoreService {
 	
 	@Transactional
 	public int modify(String storeId, String storeName,
-			String categoryId, String locationId,
+			String categoryId, String locationId, Map storeDetail,
 			MultipartFile storeImgFile) {
 		
 		int result = storeDAO.update(storeId, storeName, categoryId, locationId);
+		
+		storeDAO.updateDetail(storeDetail);
 		
 		if (storeImgFile != null) {
 			fileService.updateAndSave(storeId, storeImgFile);
