@@ -90,6 +90,17 @@ require([
 						categoryId: store.category_id,
 						locationId: store.location_id,
 					};
+					
+					var mapImageSrc = "https://maps.googleapis.com/maps/api/staticmap" +
+						"?maptype=roadmap" +
+						"&center=" + currentStore.storeLat + "," + currentStore.storeLng +
+						"&markers=color:red|" + currentStore.storeLat + "," + currentStore.storeLng +
+						"&zoom=16" +
+						"&size=300x300" +
+						"&key=AIzaSyAHX_Y_cP2i1v9lchEPJ4yROwzh9nK6of0";
+					$("#upt-store_addr").parent("div").find("img").remove();
+					$("#upt-store_addr").parent("div").append("<img src='" + mapImageSrc + "'>");
+				
 					$("#btn-txt-upt-category").text(store.category_name);
 					$("#btn-txt-upt-location").text(store.location_name);
 					
