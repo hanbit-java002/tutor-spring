@@ -55,7 +55,8 @@
 			   store_score score,
 			   category_name category,
 			   location_name location,
-		       store_lat lat, store_lng lng
+		       store_lat lat, store_lng lng,
+		       view_cnt
 		  FROM (
 			SELECT store_id, store_name, store_img, store_score,
 				   category_id, location_id
