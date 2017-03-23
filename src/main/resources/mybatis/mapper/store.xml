@@ -39,13 +39,13 @@
  	<select id="countSearch" parameterType="string" resultType="int">
 		SELECT COUNT(store_id)
 		  FROM tbl_store
-		 WHERE store_name LIKE '%' || #{keyword} || '%'
+		 WHERE store_name LIKE CONCAT('%', #{keyword}, '%')
 	        OR location_id IN (SELECT location_id
 								 FROM tbl_location
-							    WHERE location_name LIKE '%' || #{keyword} || '%')
+							    WHERE location_name LIKE CONCAT('%', #{keyword}, '%'))
 	        OR category_id IN (SELECT category_id
 								 FROM tbl_category
-							    WHERE category_name LIKE '%' || #{keyword} || '%')
+							    WHERE category_name LIKE CONCAT('%', #{keyword}, '%'))
  	</select>
  	
  	<select id="selectSearch" parameterType="map" resultType="map">
@@ -60,13 +60,13 @@
 			SELECT store_id, store_name, store_img, store_score,
 				   category_id, location_id
 			  FROM tbl_store
-			 WHERE store_name LIKE '%' || #{keyword} || '%'
+			 WHERE store_name LIKE CONCAT('%', #{keyword}, '%')
 		        OR location_id IN (SELECT location_id
 									 FROM tbl_location
-								    WHERE location_name LIKE '%' || #{keyword} || '%')
+								    WHERE location_name LIKE CONCAT('%', #{keyword}, '%'))
 		        OR category_id IN (SELECT category_id
 									 FROM tbl_category
-								    WHERE category_name LIKE '%' || #{keyword} || '%')
+								    WHERE category_name LIKE CONCAT('%', #{keyword}, '%'))
 			 ORDER BY store_name
 			 LIMIT #{firstIndex}, #{rowsPerPage}) s, tbl_category c, tbl_location l, tbl_store_detail d
 		 WHERE s.category_id = c.category_id
